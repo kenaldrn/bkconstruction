@@ -1,0 +1,313 @@
+:root {
+    --bg-dark: #0a0c10;
+    --text-light: #f8f9fa;
+    --text-dim: #8a8d93;
+    --accent: #ffb703; /* Classic construction/luxury gold */
+    --accent-glow: rgba(255, 183, 3, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    overflow: hidden; /* Locked until animation finishes */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ================== INTRO SCREEN ================== */
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Stay on top */
+}
+
+/* Laser Drawing Line */
+.intro-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow), 0 0 30px var(--accent-glow);
+    z-index: 10;
+    transform: translateY(-50%);
+    border-radius: 2px;
+}
+
+.logo-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+    opacity: 0; /* Hidden initially, faded in by GSAP */
+}
+
+/* House SVG Drawing */
+.house-svg {
+    width: 120px;
+    height: auto;
+    color: var(--accent);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+    margin-bottom: 25px;
+}
+
+.roof-path, .base-path, .door-path, .chimney-path {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300; /* Ready to be animated by GSAP */
+}
+
+/* Typography for Intro */
+.intro-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.bk-letters {
+    display: flex;
+    overflow: hidden;
+    line-height: 1;
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.letter {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.word-wrapper {
+    overflow: hidden;
+    padding-top: 5px;
+}
+
+.word {
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 14px;
+    opacity: 0;
+    display: inline-block;
+    transform: translateY(100%);
+    color: var(--text-light);
+    margin-right: -14px; /* Offset the spacing on last letter */
+}
+
+/* ================== MAIN CONTENT ================== */
+.main-content {
+    opacity: 0;
+    height: 100vh;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Architectural Grid Background for Premium Feel */
+.main-content::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 70% 40%, rgba(255,183,3,0.03) 0%, transparent 60%),
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 60px 60px, 60px 60px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.header {
+    padding: 30px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.nav-logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--accent);
+}
+
+.nav {
+    display: flex;
+    gap: 40px;
+}
+
+.nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.nav a:hover {
+    color: var(--accent);
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+.menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.menu-btn span {
+    width: 30px;
+    height: 2px;
+    background-color: var(--text-light);
+    transition: 0.3s;
+}
+
+/* Hero Section */
+.hero {
+    min-height: calc(100vh - 100px);
+    display: flex;
+    align-items: center;
+    padding: 0 6%;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 183, 3, 0.3);
+    border-radius: 30px;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    background: rgba(255, 183, 3, 0.05);
+}
+
+.hero-content h2 {
+    font-size: 5.5rem;
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 50px;
+    max-width: 600px;
+}
+
+/* Premium CTA Button */
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 45px;
+    background-color: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.cta-btn span {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--accent);
+    z-index: 1;
+    transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.cta-btn:hover {
+    color: var(--bg-dark);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px rgba(255, 183, 3, 0.5);
+}
+
+.cta-btn:hover .btn-glow {
+    left: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .hero-content h2 {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav { display: none; }
+    .menu-btn { display: flex; }
+    
+    .house-svg { width: 90px; }
+    .bk-letters { font-size: 3.5rem; }
+    .word { font-size: 0.9rem; letter-spacing: 10px; margin-right: -10px; }
+    
+    .hero-content h2 { font-size: 3.2rem; }
+    .hero-content p { font-size: 1rem; }
+    .hero { padding-top: 50px; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 { font-size: 2.5rem; }
+    .bk-letters { font-size: 3rem; }
+}
